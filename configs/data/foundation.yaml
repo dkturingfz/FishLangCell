@@ -1,0 +1,20 @@
+pool: foundation
+species_priority:
+  - danio_rerio
+input_formats:
+  - h5ad
+  - mtx
+  - loom
+required_fields:
+  - dataset_id
+  - species
+  - tissue
+  - stage
+  - sex
+  - assay
+  - donor_id
+  - label_original
+  - label_harmonized
+split_policy:
+  train: 0.9
+  holdout: 0.1

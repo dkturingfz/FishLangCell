@@ -1,0 +1,16 @@
+vocab_name: zebrafish_main
+species: danio_rerio
+gene_id_type: ensembl
+include_fields:
+  - token_id
+  - species
+  - gene_id
+  - gene_symbol
+  - gene_biotype
+  - is_protein_coding
+  - orthogroup_id
+  - human_ortholog
+  - is_testis_marker
+  - is_germline_marker
+  - is_somatic_marker
+paralog_policy: keep_separate_tokens

@@ -1,0 +1,6 @@
+pool: eval
+splits:
+  - within_dataset_holdout
+  - cross_paper_holdout
+  - cross_species_holdout_v2
+train_leakage_check: true
