@@ -1,0 +1,4 @@
+stage: pretrain_cell
+model_config: configs/model/fish_geneformer_small.yaml
+data_config: configs/data/foundation.yaml
+output_dir: outputs/checkpoints

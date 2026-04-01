@@ -1,0 +1,73 @@
+version: 0.1
+name: testis_ontology
+root: testis_cell
+nodes:
+  - id: testis_cell
+    label: testis cell
+    parent: null
+  - id: germ_cell
+    label: germ cell
+    parent: testis_cell
+  - id: spermatogonia
+    label: spermatogonia
+    parent: germ_cell
+  - id: undifferentiated_spermatogonia
+    label: undifferentiated spermatogonia
+    parent: spermatogonia
+  - id: differentiating_spermatogonia
+    label: differentiating spermatogonia
+    parent: spermatogonia
+  - id: spermatocyte
+    label: spermatocyte
+    parent: germ_cell
+  - id: preleptotene
+    label: preleptotene
+    parent: spermatocyte
+  - id: leptotene
+    label: leptotene
+    parent: spermatocyte
+  - id: zygotene
+    label: zygotene
+    parent: spermatocyte
+  - id: pachytene
+    label: pachytene
+    parent: spermatocyte
+  - id: diplotene
+    label: diplotene
+    parent: spermatocyte
+  - id: late_meiotic_cell
+    label: late meiotic cell
+    parent: spermatocyte
+  - id: spermatid
+    label: spermatid
+    parent: germ_cell
+  - id: early_spermatid
+    label: early spermatid
+    parent: spermatid
+  - id: intermediate_spermatid
+    label: intermediate spermatid
+    parent: spermatid
+  - id: late_spermatid
+    label: late spermatid
+    parent: spermatid
+  - id: somatic_cell
+    label: somatic cell
+    parent: testis_cell
+  - id: sertoli_cell
+    label: Sertoli cell
+    parent: somatic_cell
+  - id: leydig_cell
+    label: Leydig cell
+    parent: somatic_cell
+  - id: macrophage
+    label: macrophage
+    parent: somatic_cell
+  - id: endothelial_cell
+    label: endothelial cell
+    parent: somatic_cell
+  - id: myoid_vascular_smooth_muscle_like_cell
+    label: myoid / vascular smooth muscle-like cell
+    parent: somatic_cell
+  - id: stromal_cell
+    label: stromal cell
+    parent: somatic_cell

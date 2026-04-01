@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fish-langcell"
+version = "0.1.0"
+description = "Fish-native LangCell scaffold for single-cell multimodal annotation"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Fish-LangCell Team" }]
+dependencies = []
+
+[project.scripts]
+fish-langcell = "fish_langcell.cli:main"
+ingest-dataset = "fish_langcell.cli:ingest_dataset"
+build-vocab = "fish_langcell.cli:build_vocab"
+build-sequences = "fish_langcell.cli:build_sequences"
+train-cell-encoder = "fish_langcell.cli:train_cell_encoder"
+train-multimodal = "fish_langcell.cli:train_multimodal"
+tune-testis = "fish_langcell.cli:tune_testis"
+run-benchmark = "fish_langcell.cli:run_benchmark"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

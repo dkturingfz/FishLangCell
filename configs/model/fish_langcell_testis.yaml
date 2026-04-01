@@ -1,0 +1,4 @@
+model_name: fish-langcell-testis
+base_checkpoint: outputs/checkpoints/fish_langcell_base.ckpt
+domain_pool: testis
+hard_negative_mining: true

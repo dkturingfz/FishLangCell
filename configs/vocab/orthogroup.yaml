@@ -1,0 +1,8 @@
+source: orthofinder_or_equivalent
+primary_key: orthogroup_id
+fields:
+  - orthogroup_id
+  - species
+  - gene_id
+  - human_ortholog
+usage: auxiliary_only

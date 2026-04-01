@@ -1,0 +1,5 @@
+stage: align_multimodal
+model_config: configs/model/fish_langcell_base.yaml
+data_config: configs/data/foundation.yaml
+text_pair_source: data/text_corpus/fish_cell_text_pairs.parquet
+output_dir: outputs/checkpoints

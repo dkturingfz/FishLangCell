@@ -1,0 +1,19 @@
+pool: testis
+focus: spermatogenesis
+species_priority:
+  - danio_rerio
+required_fields:
+  - dataset_id
+  - species
+  - tissue
+  - stage
+  - sex
+  - assay
+  - label_original
+  - label_harmonized
+hard_negative_pairs:
+  - [undifferentiated_spermatogonia, differentiating_spermatogonia]
+  - [preleptotene, leptotene]
+  - [leptotene, zygotene]
+  - [zygotene, pachytene]
+  - [early_spermatid, late_spermatid]

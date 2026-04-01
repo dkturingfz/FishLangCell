@@ -1,0 +1,4 @@
+stage: tune_testis
+model_config: configs/model/fish_langcell_testis.yaml
+data_config: configs/data/testis.yaml
+output_dir: outputs/checkpoints

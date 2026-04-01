@@ -1,0 +1,7 @@
+model_name: fish-langcell-base
+cell_encoder_checkpoint: outputs/checkpoints/fish_geneformer_base.ckpt
+text_encoder_init: microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext
+projection_dim: 256
+losses:
+  - contrastive
+  - matching

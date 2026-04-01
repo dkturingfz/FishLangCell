@@ -1,0 +1,7 @@
+stage: eval
+benchmark_sets:
+  - broad_fish
+  - testis_coarse
+  - testis_fine
+data_config: configs/data/eval.yaml
+report_dir: outputs/reports

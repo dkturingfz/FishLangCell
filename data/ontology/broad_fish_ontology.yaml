@@ -1,0 +1,31 @@
+version: 0.1
+name: broad_fish_ontology
+root: cell
+nodes:
+  - id: cell
+    label: cell
+    parent: null
+  - id: germ_cell
+    label: germ cell
+    parent: cell
+  - id: epithelial_cell
+    label: epithelial cell
+    parent: cell
+  - id: stromal_cell
+    label: stromal cell
+    parent: cell
+  - id: endothelial_cell
+    label: endothelial cell
+    parent: cell
+  - id: immune_cell
+    label: immune cell
+    parent: cell
+  - id: muscle_like_cell
+    label: muscle-like cell
+    parent: cell
+  - id: neural_cell
+    label: neural cell
+    parent: cell
+  - id: blood_cell
+    label: blood cell
+    parent: cell
