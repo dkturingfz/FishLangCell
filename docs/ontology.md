@@ -1,51 +1,25 @@
-# Ontology Plan (v1 Governance Baseline)
+# Ontology Mapping Guide (Scaffold v0.1)
 
 ## Purpose
-`data/ontology/ontology_mapping.tsv` maps dataset-specific labels into a practical harmonized hierarchy for fish-centric training and evaluation.
+`data/ontology/ontology_mapping.tsv` is the editable mapping table used to normalize dataset labels into Fish-LangCell training/eval labels.
 
-## Editing policy
-Primary editors are ontology curators and domain scientists. Preprocessing engineers may add provisional mappings but should flag them with lower confidence for curator review.
-
-## Required label layers
-Each mapping row preserves:
-- `original_label` (as observed in source dataset)
-- `harmonized_label` (project-standard flat label)
-- `hierarchical_label` (training-oriented hierarchy path)
-
-This distinction is mandatory for reproducibility and reversible label audits.
-
-## Required mapping columns
-Validation enforces the following columns:
+## Required columns
+The scaffold mapping table uses five required columns:
 - `original_label`
 - `harmonized_label`
 - `hierarchical_label`
 - `ontology_namespace`
-- `ontology_version`
-- `mapping_confidence`
-- `source_dataset`
 - `notes`
 
-## Practical v1 ontology scope
-- Broad fish categories for foundation tasks.
-- Testis somatic classes.
-- Germline hierarchy and spermatogenesis stage labels.
-- Dataset-specific synonym/abbreviation mapping examples.
+## How it is used later
+- **Manual curation now**: add and refine mappings row-by-row as datasets are reviewed.
+- **Compute work later**: preprocessing will apply these mappings to convert source annotations into harmonized labels.
 
-## How this feeds preprocessing/training
-- Harmonization transforms source labels into standardized training targets.
-- Hierarchy paths support coarse-to-fine task definitions.
-- Confidence flags (`curated`, `provisional`, `review_needed`) guide whether mappings can be auto-applied.
+## Curation rules for this stage
+- Keep labels conservative and broad where uncertain.
+- Use `notes` to mark uncertainty (for example: `pending_curation`).
+- Do not remove old source labels; add new rows for aliases/synonyms.
 
-## Validation command
-```bash
-fish-langcell validate-ontology --mapping data/ontology/ontology_mapping.tsv
-```
-
-## Linkage to text corpus and cell corpus schemas
-
-Ontology harmonized and hierarchical labels should remain synchronized with:
-- `data/text_corpus/*.jsonl` (`label_harmonized`, `label_hierarchical`)
-- manifest governance fields for `label_original` and `label_harmonized`
-- `docs/cell_corpus_spec.md` requirements for standardized cell metadata
-
-If uncertain mappings appear, use explicit placeholders (`TBD`, `unknown`, `pending_curation`) and track curator follow-up in notes.
+## Linkage
+- Text corpus JSONL files should use `label_harmonized` and `label_hierarchical` values present in this mapping table.
+- Dataset manifests should keep `label_original`/`label_harmonized` compatible with this mapping table.

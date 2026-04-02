@@ -1,19 +1,19 @@
-# Release Checklist (v1)
+# Release Checklist (Scaffold v0.1)
 
-## Must-have Criteria
-- [ ] Fish-native vocabulary and tokenization frozen and documented.
-- [ ] `fish-geneformer-base` trained with reproducible config and outputs.
-- [ ] `fish-langcell-base` supports broad fish zero-shot annotation.
-- [ ] `fish-langcell-testis` supports coarse and fine testis annotation.
-- [ ] Benchmark scripts and split definitions are frozen.
-- [ ] Model card + data provenance documentation complete.
-
-## Packaging
-- [ ] Export inference bundle.
-- [ ] Include checkpoint metadata and config snapshots.
-- [ ] Include ontology/vocabulary version IDs.
+Use this list before any public artifact release.
 
 ## Governance
-- [ ] Dataset inclusion decisions documented.
-- [ ] Label harmonization decisions versioned.
-- [ ] Gene ID policy finalized and referenced.
+- [ ] Inventory rows are curated with provenance fields completed.
+- [ ] Dataset decisions log is updated and consistent with manifests.
+- [ ] Ontology mappings reviewed for active labels.
+- [ ] Gene ID policy version is referenced in release notes.
+
+## Corpus scaffolds
+- [ ] Text corpus JSONL files pass schema validation.
+- [ ] Manifest TSV files include required fields and split/use assignments.
+- [ ] Placeholder rows are clearly marked in notes/status fields.
+
+## Compute boundary check
+- [ ] This scaffold phase did not include model training.
+- [ ] This scaffold phase did not include heavy preprocessing.
+- [ ] This scaffold phase did not include sequence generation.

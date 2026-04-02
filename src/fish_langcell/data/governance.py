@@ -39,9 +39,6 @@ REQUIRED_ONTOLOGY_COLUMNS: tuple[str, ...] = (
     "harmonized_label",
     "hierarchical_label",
     "ontology_namespace",
-    "ontology_version",
-    "mapping_confidence",
-    "source_dataset",
     "notes",
 )
 
