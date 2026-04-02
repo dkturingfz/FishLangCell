@@ -1,0 +1,3 @@
+canonical_gene_id	gene_symbol	species	gene_id_type	genome_build	source_release	is_primary_symbol	status	notes
+ENSDARG00000000001	demo_gene_a	Danio rerio	Ensembl	GRCz11	placeholder_release	true	placeholder	Starter reference row.
+ENSDARG00000099999	demo_gene_b	Danio rerio	SymbolOnly	unknown	manual_placeholder	false	unresolved	Needs Ensembl resolution.

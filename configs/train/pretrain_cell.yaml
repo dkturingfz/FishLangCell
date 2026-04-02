@@ -1,14 +1,35 @@
-run_name: pretrain_cell_v0_1
-data_config: configs/data/foundation.yaml
-vocab_config: configs/vocab/zebrafish_vocab.yaml
-model_config: configs/model/fish_geneformer_small.yaml
+run_name: pretrain_cell_template_v0_1
+stage: pretrain_cell
+description: >
+  Fish-native cell encoder pretraining template. This file defines expected path
+  structure and hyperparameter placeholders only.
+inputs:
+  manifest_path: manifests/foundation_datasets.tsv
+  tokenization_config: configs/tokenization/zebrafish_sequence_builder.yaml
+  sequence_dir: data/sequences/zebrafish_v0_1 # prepared later
+  vocab_config: configs/vocab/id_policy.yaml
+model:
+  model_config: configs/model/fish_geneformer_small.yaml
+  init_checkpoint: null # set to pretrained checkpoint path when available
 training:
   seed: 42
   batch_size: 32
+  grad_accum_steps: 1
   max_steps: 1000
-  learning_rate: 0.0001
+  learning_rate: 1.0e-4
+  weight_decay: 0.01
+  warmup_steps: 100
   precision: bf16
+  num_workers: 4
+  # placeholders for future rank-sequence usage
+  sequence_length: null
+  masking_ratio: null
+  rank_sampling_strategy: null
 outputs:
-  checkpoint_dir: outputs/checkpoints/pretrain_cell_v0_1
-  log_dir: outputs/logs/pretrain_cell_v0_1
-notes: "Scaffold defaults only; replace with scheduler and distributed settings later."
+  checkpoint_dir: outputs/checkpoints/pretrain_cell_template_v0_1
+  log_dir: outputs/logs/pretrain_cell_template_v0_1
+  metrics_path: outputs/reports/pretrain_cell_template_v0_1/metrics.json
+safety:
+  require_manifest_validation: true
+  require_vocab_validation: true
+notes: Template only; do not launch training in this round.

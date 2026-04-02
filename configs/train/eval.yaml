@@ -1,13 +1,29 @@
-run_name: eval_v0_1
-data_config: configs/data/eval.yaml
-checkpoint_candidates:
-  - outputs/checkpoints/align_multimodal_v0_1
-  - outputs/checkpoints/tune_testis_v0_1
+run_name: eval_template_v0_1
+stage: eval
+description: Evaluation template for holdout and benchmark reporting.
+inputs:
+  eval_manifest: manifests/eval_datasets.tsv
+  ontology_mapping: data/ontology/ontology_mapping.tsv
+  checkpoint_candidates:
+    - outputs/checkpoints/align_multimodal_template_v0_1
+    - outputs/checkpoints/tune_testis_template_v0_1
 benchmarks:
   - broad_fish
   - testis_coarse
   - testis_fine
+metrics:
+  primary:
+    - macro_f1
+    - micro_f1
+    - hierarchy_consistency
+  secondary:
+    - calibration_error
+    - ood_detection_auroc
 report:
-  output_dir: outputs/reports/eval_v0_1
+  output_dir: outputs/reports/eval_template_v0_1
   save_predictions: true
-notes: "Benchmark metrics to be finalized with frozen split spec."
+  save_confusion_matrices: true
+safety:
+  enforce_eval_only_manifest: true
+  block_if_training_overlap_detected: true
+notes: Template only; no evaluation runs are executed in this round.
