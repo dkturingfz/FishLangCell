@@ -1,0 +1,3 @@
+gene_token	canonical_gene_id	species	gene_symbol	biotype	orthogroup_id	id_source	status	audit_note
+fish_gene_placeholder_0001	ENSDARG00000000001	Danio rerio	demo_gene_a	protein_coding	OG0000001	zebrafish_gene_reference	placeholder	Schema starter row; replace with curated vocabulary entries.
+fish_gene_placeholder_0002	UNRESOLVED:SYMBOL_ONLY:demo_gene_b	Danio rerio	demo_gene_b	unknown		manual_symbol_import	unresolved	Example unresolved ID entry to test downstream handling.

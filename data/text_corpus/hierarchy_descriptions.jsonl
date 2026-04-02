@@ -1,0 +1,3 @@
+{"entry_id":"hier_0001","hierarchy":"testis cell > germ cell > spermatogonia > undifferentiated spermatogonia","description":"Represents early germline progenitor hierarchy in testis specialization tasks.","source":"data/ontology/ontology_mapping.tsv","status":"curated_seed"}
+{"entry_id":"hier_0002","hierarchy":"testis cell > germ cell > spermatocyte > pachytene","description":"Represents meiotic progression hierarchy for stage-aware labeling and evaluation.","source":"data/ontology/ontology_mapping.tsv","status":"curated_seed"}
+{"entry_id":"hier_0003","hierarchy":"testis cell > somatic cell > Sertoli cell","description":"Represents a canonical somatic support branch in testis ontology mappings.","source":"data/ontology/ontology_mapping.tsv","status":"curated_seed"}

@@ -1,13 +1,31 @@
-run_name: align_multimodal_v0_1
-data_config: configs/data/foundation.yaml
-model_config: configs/model/fish_langcell_base.yaml
+run_name: align_multimodal_template_v0_1
+stage: align_multimodal
+description: >
+  Multimodal alignment template linking cell embeddings and text corpus
+  supervision. This template is configuration-only.
+inputs:
+  foundation_manifest: manifests/foundation_datasets.tsv
+  text_corpus_files:
+    - data/text_corpus/fish_celltype_definitions.jsonl
+    - data/text_corpus/marker_sentences.jsonl
+    - data/text_corpus/hierarchy_descriptions.jsonl
+  cell_encoder_checkpoint: outputs/checkpoints/pretrain_cell_template_v0_1
+model:
+  model_config: configs/model/fish_langcell_base.yaml
+  text_encoder_name: placeholder_pubmedbert
+  projection_dim: 256
 training:
   seed: 42
   batch_size: 64
   max_steps: 1000
-  learning_rate: 0.00005
+  learning_rate: 5.0e-5
   temperature: 0.07
+  loss_weights:
+    contrastive: 1.0
+    matching: null
+  hard_negative_ratio: null
 outputs:
-  checkpoint_dir: outputs/checkpoints/align_multimodal_v0_1
-  log_dir: outputs/logs/align_multimodal_v0_1
-notes: "Placeholder objective weights and sampler strategy."
+  checkpoint_dir: outputs/checkpoints/align_multimodal_template_v0_1
+  log_dir: outputs/logs/align_multimodal_template_v0_1
+  metrics_path: outputs/reports/align_multimodal_template_v0_1/metrics.json
+notes: Template only; plug in pretrained checkpoints later.

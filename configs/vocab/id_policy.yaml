@@ -1,0 +1,35 @@
+version: 0.1
+policy_name: fish_langcell_gene_id_policy
+canonical_gene_id:
+  preferred_type: ensembl_gene_id
+  required_pattern_by_species:
+    Danio rerio: '^ENSDARG[0-9]{11}$'
+  unresolved_prefix: 'UNRESOLVED:'
+accepted_alternate_id_types:
+  - gene_symbol
+  - entrez_gene_id
+  - ensembl_transcript_id
+  - synonym
+duplicate_and_paralog_policy:
+  collapse_exact_id_duplicates: true
+  keep_species_specific_paralogs_separate: true
+  paralog_resolution_field: orthogroup_id
+  unresolved_paralog_strategy: mark_review_required
+orthogroup_usage:
+  enabled: true
+  required_fields:
+    - orthogroup_id
+    - confidence
+    - source
+status_fields:
+  allowed_values:
+    - curated
+    - placeholder
+    - unresolved
+    - deprecated
+  unresolved_requires_note: true
+audit:
+  require_source_release: true
+  require_last_updated_iso_date: true
+  require_curator: true
+  require_change_reason_for_updates: true

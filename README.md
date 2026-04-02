@@ -1,44 +1,58 @@
 # Fish-LangCell
 
-Fish-LangCell is a **fish-native** multimodal single-cell annotation framework inspired by LangCell, with a zebrafish-first v1 plan and testis specialization track.
+Fish-LangCell is a **fish-native** multimodal single-cell annotation framework inspired by LangCell, with a zebrafish-first strategy and a later testis specialization phase.
 
-## Current status
+## Current status (artifact preparation round)
 
-This repository now includes a first practical **data governance layer**:
-- curated dataset inventory scaffold with split/use decisions
-- ontology mapping table for harmonized and hierarchical labels
-- gene identifier policy focused on fish-native constraints
-- validation CLI commands for governance artifacts
+This round prepares schema-complete training-input artifacts only:
+- frozen dataset manifests
+- fish gene vocabulary templates and ID policy
+- text corpus starter JSONL files
+- tokenization and sequence-building specs
+- train/eval configuration templates
+- lightweight artifact validators
 
-Model training remains intentionally minimal in this round.
+No training, large preprocessing, or checkpoint downloads are performed in this stage.
 
 ## Repository layout
 
-- `configs/`: versioned configuration templates for data, vocab, models, and training/eval stages
-- `data/`: inventory and ontology mapping artifacts
-- `docs/`: PRD-derived project documentation and governance policies
-- `src/fish_langcell/`: importable Python package modules and CLI
-- `scripts/`: helper scripts (future)
-- `benchmarks/`: benchmark assets and reports (future)
-- `outputs/`: generated outputs and exports
+- `manifests/`: frozen split manifests derived from governance inventory.
+- `data/`: governance (`data_inventory`, ontology), vocabulary TSVs, and text corpus JSONL artifacts.
+- `configs/tokenization/`: sequence-builder template configs.
+- `configs/train/`: pretrain/alignment/tuning/eval templates.
+- `docs/`: governance, vocabulary, tokenization, and planning documentation.
+- `src/fish_langcell/`: Python package and CLI commands.
 
-## Governance artifacts
+## Artifact categories
 
-- `data/data_inventory.tsv`: candidate datasets, provenance fields, split, and intended use
-- `data/ontology/ontology_mapping.tsv`: original-to-harmonized label mappings plus hierarchical paths
-- `docs/gene_id_policy.md`: canonical ID and teleost paralog handling policy
-- `docs/dataset_decisions.md`: include/defer/exclude decision log
+### 1) Governance artifacts
+- `data/data_inventory.tsv`
+- `docs/dataset_decisions.md`
+- `data/ontology/ontology_mapping.tsv`
 
-These artifacts are human-editable and machine-validated before preprocessing/training promotion.
+### 2) Vocabulary artifacts
+- `data/vocab/fish_gene_vocab_v0.1.tsv`
+- `data/vocab/zebrafish_gene_reference.tsv`
+- `data/vocab/gene_symbol_to_ensembl.tsv`
+- `data/vocab/orthogroup_reference.tsv`
+- `configs/vocab/id_policy.yaml`
+- `docs/gene_vocab_spec.md`
 
-## Quick start
+### 3) Text corpus artifacts
+- `data/text_corpus/fish_celltype_definitions.jsonl`
+- `data/text_corpus/testis_celltype_definitions.jsonl`
+- `data/text_corpus/marker_sentences.jsonl`
+- `data/text_corpus/hierarchy_descriptions.jsonl`
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .
-fish-langcell --help
-```
+### 4) Tokenization specs
+- `configs/tokenization/zebrafish_sequence_builder.yaml`
+- `docs/tokenization_spec.md`
+
+### 5) Train/eval config templates
+- `configs/train/pretrain_cell.yaml`
+- `configs/train/align_multimodal.yaml`
+- `configs/train/tune_testis.yaml`
+- `configs/train/eval.yaml`
 
 ## CLI commands
 
@@ -53,13 +67,29 @@ Workflow scaffold commands:
 - `run-benchmark`
 - `export-model`
 
-Governance validation commands:
+Validation commands:
 - `validate-inventory`
 - `validate-ontology`
+- `validate-manifests`
+- `validate-vocab`
+- `validate-text-corpus`
+- `validate-tokenization-config`
 
-### Typical governance checks
+## Quick start
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+fish-langcell --help
+```
+
+## Typical validation checks
 
 ```bash
 fish-langcell validate-inventory --inventory data/data_inventory.tsv
-fish-langcell validate-ontology --mapping data/ontology/ontology_mapping.tsv
+fish-langcell validate-manifests
+fish-langcell validate-vocab
+fish-langcell validate-text-corpus
+fish-langcell validate-tokenization-config
 ```

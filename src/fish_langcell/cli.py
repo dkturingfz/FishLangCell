@@ -17,6 +17,15 @@ def _print_todo(task: str) -> None:
     print(f"[TODO] {task}: implementation is scaffold-only in v0.1 initialization.")
 
 
+def _emit_report(report) -> int:
+    print(report.summary())
+    for warning in report.warnings:
+        print(f"WARNING: {warning}")
+    for error in report.errors:
+        print(f"ERROR: {error}")
+    return 0 if report.ok else 2
+
+
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="fish-langcell", description="Fish-LangCell unified command interface")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -34,6 +43,30 @@ def _build_parser() -> argparse.ArgumentParser:
 
     validate_ontology = subparsers.add_parser("validate-ontology", help="Validate ontology mapping governance artifact")
     validate_ontology.add_argument("--mapping", default="data/ontology/ontology_mapping.tsv", help="Ontology mapping TSV path")
+
+    validate_manifests = subparsers.add_parser("validate-manifests", help="Validate frozen dataset manifest artifacts")
+    validate_manifests.add_argument(
+        "--manifests",
+        nargs="+",
+        default=[
+            "manifests/foundation_datasets.tsv",
+            "manifests/testis_datasets.tsv",
+            "manifests/eval_datasets.tsv",
+        ],
+        help="Manifest TSV paths",
+    )
+
+    subparsers.add_parser("validate-vocab", help="Validate vocabulary artifact schemas")
+    subparsers.add_parser("validate-text-corpus", help="Validate text corpus JSONL artifact schemas")
+
+    validate_tokenization = subparsers.add_parser(
+        "validate-tokenization-config", help="Validate tokenization config presence and required keys"
+    )
+    validate_tokenization.add_argument(
+        "--config",
+        default="configs/tokenization/zebrafish_sequence_builder.yaml",
+        help="Tokenization config path",
+    )
 
     vocab = subparsers.add_parser("build-vocab", help="Build fish-native vocabulary artifacts")
     vocab.add_argument("--config", default="configs/vocab/zebrafish_vocab.yaml", help="Vocabulary config path")
@@ -84,25 +117,39 @@ def _run_command(args: argparse.Namespace) -> int:
         _require_existing_path(args.inventory, "Inventory TSV")
         from fish_langcell.data import validate_inventory_artifact
 
-        report = validate_inventory_artifact(args.inventory)
-        print(report.summary())
-        for warning in report.warnings:
-            print(f"WARNING: {warning}")
-        for error in report.errors:
-            print(f"ERROR: {error}")
-        return 0 if report.ok else 2
+        return _emit_report(validate_inventory_artifact(args.inventory))
 
     elif args.command == "validate-ontology":
         _require_existing_path(args.mapping, "Ontology mapping TSV")
         from fish_langcell.data import validate_ontology_artifact
 
-        report = validate_ontology_artifact(args.mapping)
-        print(report.summary())
-        for warning in report.warnings:
-            print(f"WARNING: {warning}")
-        for error in report.errors:
-            print(f"ERROR: {error}")
-        return 0 if report.ok else 2
+        return _emit_report(validate_ontology_artifact(args.mapping))
+
+    elif args.command == "validate-manifests":
+        from fish_langcell.data import validate_manifest_artifact
+
+        status = 0
+        for manifest in args.manifests:
+            _require_existing_path(manifest, "Manifest TSV")
+            result = _emit_report(validate_manifest_artifact(manifest))
+            if result != 0:
+                status = result
+        return status
+
+    elif args.command == "validate-vocab":
+        from fish_langcell.data import validate_vocab_artifacts
+
+        return _emit_report(validate_vocab_artifacts())
+
+    elif args.command == "validate-text-corpus":
+        from fish_langcell.data import validate_text_corpus_artifacts
+
+        return _emit_report(validate_text_corpus_artifacts())
+
+    elif args.command == "validate-tokenization-config":
+        from fish_langcell.data import validate_tokenization_config
+
+        return _emit_report(validate_tokenization_config(args.config))
 
     elif args.command in {"build-vocab", "build-sequences", "train-cell-encoder", "train-multimodal", "tune-testis", "run-benchmark"}:
         _require_existing_path(args.config, "Config file")

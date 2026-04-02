@@ -1,13 +1,29 @@
-run_name: tune_testis_v0_1
-data_config: configs/data/testis.yaml
-model_config: configs/model/fish_langcell_testis.yaml
+run_name: tune_testis_template_v0_1
+stage: tune_testis
+description: >
+  Testis specialization template for later fine-tuning after foundation
+  and multimodal stages are available.
+inputs:
+  manifest_path: manifests/testis_datasets.tsv
+  text_corpus_files:
+    - data/text_corpus/testis_celltype_definitions.jsonl
+    - data/text_corpus/marker_sentences.jsonl
+  base_checkpoint: outputs/checkpoints/align_multimodal_template_v0_1
+  tokenization_config: configs/tokenization/zebrafish_sequence_builder.yaml
+model:
+  model_config: configs/model/fish_langcell_testis.yaml
+  freeze_text_encoder: false
+  freeze_cell_encoder: false
 training:
   seed: 42
   batch_size: 48
   max_steps: 800
-  learning_rate: 0.00003
+  learning_rate: 3.0e-5
   hard_negative_ratio: 0.5
+  early_stop_metric: testis_fine_macro_f1
+  early_stop_patience: 10
 outputs:
-  checkpoint_dir: outputs/checkpoints/tune_testis_v0_1
-  log_dir: outputs/logs/tune_testis_v0_1
-notes: "Scaffold config for testis domain specialization."
+  checkpoint_dir: outputs/checkpoints/tune_testis_template_v0_1
+  log_dir: outputs/logs/tune_testis_template_v0_1
+  metrics_path: outputs/reports/tune_testis_template_v0_1/metrics.json
+notes: Template only; keep eval holdout datasets excluded from tuning.

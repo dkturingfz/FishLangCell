@@ -1,0 +1,3 @@
+species	input_symbol	canonical_gene_id	mapping_status	mapping_source	source_release	confidence	review_required	notes
+Danio rerio	demo_gene_a	ENSDARG00000000001	mapped	zebrafish_gene_reference	placeholder_release	high	false	Starter mapping row.
+Danio rerio	demo_gene_b		unresolved	manual_placeholder	unknown	low	true	No stable Ensembl ID confirmed yet.
