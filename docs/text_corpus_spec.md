@@ -1,20 +1,16 @@
-# Text Corpus Specification (Frozen v0.1)
+# Text Corpus Specification (Scaffold v0.1)
 
-This document freezes the schema for Fish-LangCell text corpus starter assets used in later multimodal training.
+## Purpose
+Defines the lightweight JSONL schema for starter text artifacts used by Fish-LangCell.
 
-## Scope
-
-Applies to:
+## Files in scope
 - `data/text_corpus/fish_celltype_definitions.jsonl`
 - `data/text_corpus/testis_celltype_definitions.jsonl`
 - `data/text_corpus/marker_sentences.jsonl`
 - `data/text_corpus/hierarchy_descriptions.jsonl`
 
-Format: JSONL (one JSON object per line).
-
-## Frozen common schema
-
-Each record must include these fields:
+## Frozen common schema (all JSONL records)
+Required fields:
 - `id`
 - `species_scope`
 - `tissue_scope`
@@ -24,47 +20,28 @@ Each record must include these fields:
 - `label_hierarchical`
 - `text_type`
 - `text`
-- `markers`
+- `markers` (JSON array)
 - `source`
 - `status`
 - `notes`
 
-## Allowed enums
-
-### `text_type`
+## `text_type` values
 - `definition`
 - `marker_prompt`
 - `hierarchy_description`
 - `alias`
 
-### `status`
+## `status` values
 - `draft`
 - `reviewed`
 - `frozen`
 - `deprecated`
 
-## Field expectations
+## What is manual now vs compute later
+- **Manual now**: write short, conservative definitions/prompts and align labels to ontology mapping.
+- **Compute later**: use these records for prompt templates, weak supervision, and eval documentation generation.
 
-- `id`: unique stable string identifier.
-- `species_scope`: one of project-level scopes such as `zebrafish`, `fish`, `teleost`, or `mixed`.
-- `tissue_scope`: scope such as `testis`, `gonad`, `multi_tissue`.
-- `ontology_namespace`: ontology namespace used by this repository (for this stage: `broad_fish` or `testis`).
-- `label_original`: optional dataset/source label prior to harmonization; may be empty.
-- `label_harmonized`: canonical harmonized label used across artifacts.
-- `label_hierarchical`: hierarchy path aligned to ontology mapping.
-- `text`: main text payload for definition/prompt/description.
-- `markers`: JSON array of marker symbols or empty array.
-- `source`: provenance (`manual_curated`, `ontology_curated`, `imported`, etc.).
-- `notes`: optional free text.
-
-## Starter role by file
-
-- `fish_celltype_definitions.jsonl`: broad fish categories.
-- `testis_celltype_definitions.jsonl`: testis and spermatogenesis stage definitions.
-- `marker_sentences.jsonl`: concise marker-style prompts.
-- `hierarchy_descriptions.jsonl`: parent-child and stage hierarchy text entries.
-
-## Consistency linkage
-
-- Harmonized labels and hierarchical labels must remain consistent with `data/ontology/ontology_mapping.tsv`.
-- Text-corpus status values must remain synchronized with repository validators.
+## Editing guidance
+- Keep entries short and curator-editable.
+- Prefer broad placeholders over speculative biological detail.
+- Keep harmonized/hierarchical labels synchronized with `data/ontology/ontology_mapping.tsv`.
