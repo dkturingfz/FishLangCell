@@ -1,3 +1,4 @@
-gene_token	canonical_gene_id	species	gene_symbol	biotype	orthogroup_id	id_source	status	audit_note
-fish_gene_placeholder_0001	ENSDARG00000000001	Danio rerio	demo_gene_a	protein_coding	OG0000001	zebrafish_gene_reference	placeholder	Schema starter row; replace with curated vocabulary entries.
-fish_gene_placeholder_0002	UNRESOLVED:SYMBOL_ONLY:demo_gene_b	Danio rerio	demo_gene_b	unknown		manual_symbol_import	unresolved	Example unresolved ID entry to test downstream handling.
+token_id	species	gene_id	gene_symbol	gene_biotype	is_protein_coding	orthogroup_id	human_ortholog	is_testis_marker	is_germline_marker	is_somatic_marker	status	source	notes
+fish_tok_000001	Danio rerio	ENSDARG00000000001	demo_gene_a	protein_coding	true	OG0000001	TBD	false	false	false	placeholder	zebrafish_gene_reference	Schema starter row; replace during curation.
+fish_tok_000002	Danio rerio	ENSDARG00000000002	demo_gene_b	protein_coding	true	OG0000002	TBD	true	true	false	pending_curation	manual_curated	Starter marker flag example pending curator review.
+fish_tok_999999	Danio rerio	TBD	unknown	unknown	false			false	false	false	excluded	manual_curated	Explicit unresolved placeholder for pipeline tests.

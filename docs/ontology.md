@@ -40,3 +40,12 @@ Validation enforces the following columns:
 ```bash
 fish-langcell validate-ontology --mapping data/ontology/ontology_mapping.tsv
 ```
+
+## Linkage to text corpus and cell corpus schemas
+
+Ontology harmonized and hierarchical labels should remain synchronized with:
+- `data/text_corpus/*.jsonl` (`label_harmonized`, `label_hierarchical`)
+- manifest governance fields for `label_original` and `label_harmonized`
+- `docs/cell_corpus_spec.md` requirements for standardized cell metadata
+
+If uncertain mappings appear, use explicit placeholders (`TBD`, `unknown`, `pending_curation`) and track curator follow-up in notes.

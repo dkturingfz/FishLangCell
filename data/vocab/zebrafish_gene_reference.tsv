@@ -1,3 +1,4 @@
-canonical_gene_id	gene_symbol	species	gene_id_type	genome_build	source_release	is_primary_symbol	status	notes
-ENSDARG00000000001	demo_gene_a	Danio rerio	Ensembl	GRCz11	placeholder_release	true	placeholder	Starter reference row.
-ENSDARG00000099999	demo_gene_b	Danio rerio	SymbolOnly	unknown	manual_placeholder	false	unresolved	Needs Ensembl resolution.
+gene_id	gene_symbol	gene_name	gene_biotype	chromosome	start	end	strand	genome_build	source	notes
+ENSDARG00000000001	demo_gene_a	TBD	protein_coding	unknown	0	0	+	GRCz11	placeholder_release	Starter row for schema freeze.
+ENSDARG00000000002	demo_gene_b	TBD	protein_coding	unknown	0	0	-	GRCz11	placeholder_release	Starter row for schema freeze.
+TBD	unknown	TBD	unknown	unknown	0	0	+	unknown	manual_curated	Explicit unresolved placeholder row.

@@ -60,7 +60,7 @@ def _build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser("validate-text-corpus", help="Validate text corpus JSONL artifact schemas")
 
     validate_tokenization = subparsers.add_parser(
-        "validate-tokenization-config", help="Validate tokenization config presence and required keys"
+        "validate-tokenization-spec", help="Validate tokenization dependency files and required config keys"
     )
     validate_tokenization.add_argument(
         "--config",
@@ -146,10 +146,10 @@ def _run_command(args: argparse.Namespace) -> int:
 
         return _emit_report(validate_text_corpus_artifacts())
 
-    elif args.command == "validate-tokenization-config":
-        from fish_langcell.data import validate_tokenization_config
+    elif args.command == "validate-tokenization-spec":
+        from fish_langcell.data import validate_tokenization_spec
 
-        return _emit_report(validate_tokenization_config(args.config))
+        return _emit_report(validate_tokenization_spec(args.config))
 
     elif args.command in {"build-vocab", "build-sequences", "train-cell-encoder", "train-multimodal", "tune-testis", "run-benchmark"}:
         _require_existing_path(args.config, "Config file")

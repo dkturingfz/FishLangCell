@@ -1,35 +1,37 @@
 version: 0.1
-policy_name: fish_langcell_gene_id_policy
-canonical_gene_id:
-  preferred_type: ensembl_gene_id
-  required_pattern_by_species:
-    Danio rerio: '^ENSDARG[0-9]{11}$'
-  unresolved_prefix: 'UNRESOLVED:'
-accepted_alternate_id_types:
+policy_name: fish_langcell_gene_id_policy_frozen_v0_1
+canonical_id_type: ensembl_gene_id
+accepted_id_types:
+  - ensembl_gene_id
   - gene_symbol
-  - entrez_gene_id
-  - ensembl_transcript_id
-  - synonym
-duplicate_and_paralog_policy:
-  collapse_exact_id_duplicates: true
-  keep_species_specific_paralogs_separate: true
-  paralog_resolution_field: orthogroup_id
-  unresolved_paralog_strategy: mark_review_required
-orthogroup_usage:
-  enabled: true
-  required_fields:
-    - orthogroup_id
-    - confidence
-    - source
-status_fields:
-  allowed_values:
-    - curated
-    - placeholder
-    - unresolved
-    - deprecated
-  unresolved_requires_note: true
-audit:
-  require_source_release: true
-  require_last_updated_iso_date: true
-  require_curator: true
-  require_change_reason_for_updates: true
+  - ensembl_or_symbol_mixed
+species_priority:
+  - Danio rerio
+  - teleost_mixed
+paralog_policy:
+  keep_paralogs_separate: true
+  collapse_paralogs: false
+  notes: teleost paralogs remain separate by default
+orthogroup_policy:
+  role: auxiliary_metadata_only
+  may_merge_primary_tokens: false
+  required_reference_file: data/vocab/orthogroup_reference.tsv
+unresolved_id_policy:
+  allow_unresolved: true
+  unresolved_markers:
+    - TBD
+    - unknown
+    - pending_curation
+  require_explicit_record: true
+required_fields:
+  - token_id
+  - species
+  - gene_id
+  - gene_symbol
+  - gene_biotype
+  - status
+audit_fields:
+  - source
+  - notes
+  - mapping_status
+  - ambiguity_flag

@@ -1,43 +1,34 @@
 version: 0.1
-name: zebrafish_sequence_builder
-input:
-  matrix_format: anndata_h5ad # expected future values: anndata_h5ad|mtx
-  matrix_path: data/processed/foundation_placeholder.h5ad
-  feature_axis: var_names
-  cell_axis: obs_names
-  count_layer: raw_counts
-required_metadata_fields:
-  - cell_id
-  - dataset_id
-  - species
-  - tissue
-  - developmental_stage
-  - sex
-  - split
-supported_gene_id_types:
-  - Ensembl
-  - Ensembl_or_symbol
-  - SymbolOnly
-vocabulary:
-  vocab_tsv: data/vocab/fish_gene_vocab_v0.1.tsv
-  symbol_to_ensembl_tsv: data/vocab/gene_symbol_to_ensembl.tsv
-output:
-  sequence_dir: data/sequences/zebrafish_v0_1
-  sequence_file_pattern: '{dataset_id}__{split}__rankseq_v{version}.parquet'
-  metadata_file_pattern: '{dataset_id}__{split}__rankmeta_v{version}.json'
-  naming_convention_notes: use dataset_id and split to avoid leakage and collisions.
-rank_sequence_parameters:
-  enabled: false
-  method: placeholder_rank_method
-  max_genes_per_cell: 2048
-  min_counts_per_gene: 1
-  tie_break_strategy: stable_symbol_then_id
-  include_special_tokens:
-    cls_token: '<cls>'
-    sep_token: '<sep>'
-    pad_token: '<pad>'
-qc_placeholders:
-  drop_unmapped_genes: false
-  min_detected_genes_per_cell: 200
-  max_mito_fraction: null
-notes: 'Template only. Do not generate sequences in this round.'
+name: zebrafish_sequence_builder_frozen_v0_1
+input_dataset_paths:
+  - TBD
+input_metadata_paths:
+  cell_metadata: TBD
+  gene_metadata: TBD
+canonical_id_type: ensembl_gene_id
+accepted_gene_id_types:
+  - ensembl_gene_id
+  - gene_symbol
+  - ensembl_or_symbol_mixed
+matrix_orientation: cells_by_rows_genes_by_columns
+raw_count_preference_policy:
+  canonical_input: raw_counts
+  allow_normalized_only_if_raw_missing: true
+  require_manifest_note_for_normalized_only: true
+future_sequence_output_directory: data/sequences/zebrafish_v0_1
+future_output_naming:
+  sequence_pattern: '{dataset_id}__{split}__rankseq_v{version}.parquet'
+  metadata_pattern: '{dataset_id}__{split}__rankmeta_v{version}.json'
+rank_tokenization_placeholders:
+  rank_method: TBD
+  max_genes_per_cell: TBD
+  min_counts_per_gene: TBD
+  tie_break_strategy: TBD
+  special_tokens:
+    cls: '<cls>'
+    sep: '<sep>'
+    pad: '<pad>'
+dependency_links:
+  id_policy: configs/vocab/id_policy.yaml
+  vocab_table: data/vocab/fish_gene_vocab_v0.1.tsv
+notes: Template only. Sequence generation is out of scope for this round.
