@@ -23,6 +23,7 @@ Not in scope for this round: training, large-scale preprocessing, sequence gener
 - `configs/tokenization/`: sequence-builder dependency template.
 - `docs/`: frozen specifications and planning docs.
 - `src/fish_langcell/`: Python package and CLI commands.
+- 文本语料人工审核规范（Fish-LangCell）：`docs/text_corpus_review_guidelines.md`
 
 ## Artifact categories
 
