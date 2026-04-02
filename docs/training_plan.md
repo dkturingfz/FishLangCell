@@ -1,26 +1,40 @@
-# Training Plan (Phase-based)
+# Training and Delivery Plan
 
-## Phase 0: Data audit
-- Build `foundation_pool`, `testis_pool`, `eval_pool`.
-- Run QC reports for cells/genes/label coverage.
+## Phase 0 — Data Audit & Harmonization
+Deliverables:
+- foundation/testis/eval pool assignments
+- data inventory table
+- ontology draft v0.1
 
-## Phase 1: Vocab + tokenization
-- Freeze gene ID conversion policy.
-- Build fish-native vocab + orthogroup metadata.
-- Target: >=95% tokenization success on foundation cells.
+## Phase 1 — Vocabulary & Tokenization
+Deliverables:
+- fish-native vocabulary table
+- orthogroup mapping table
+- tokenization pipeline
 
-## Phase 2: Cell encoder pretraining
-- Train small/base fish-Geneformer variants.
-- Validate broad lineage separability and neighborhood purity.
+## Phase 2 — Cell Encoder Pretraining
+Deliverables:
+- `fish-geneformer-small`
+- `fish-geneformer-base`
 
-## Phase 3: Multimodal alignment
-- Build fish cell-text pairs.
-- Train fish-langcell-base using contrastive + matching losses.
+## Phase 3 — Multimodal Base Alignment
+Deliverables:
+- fish text corpus
+- fish cell-text pair dataset
+- `fish-langcell-base`
 
-## Phase 4: Testis domain tuning
-- Continued pretraining on testis pool.
-- Hard negatives for adjacent spermatogenesis stages.
+## Phase 4 — Testis Tuning
+Deliverables:
+- `fish-langcell-testis`
+- hard-negative training strategy for adjacent germ stages
 
-## Phase 5: Benchmark + release
-- Benchmarks: broad_fish, testis_coarse, testis_fine.
-- Package model cards, reports, and inference utilities.
+## Phase 5 — Benchmark & Release
+Deliverables:
+- broad/testis benchmark reports
+- model card
+- release bundle
+
+## Acceptance Highlights
+- Reproducible checkpoints and scripts.
+- Frozen benchmark definitions before v1 release.
+- Complete provenance metadata.

@@ -1,4 +1,11 @@
 model_name: fish-langcell-testis
-base_checkpoint: outputs/checkpoints/fish_langcell_base.ckpt
-domain_pool: testis
-hard_negative_mining: true
+version: 0.1
+base_checkpoint: TODO_fish_langcell_base_checkpoint
+continued_pretrain_pool: testis
+enable_hard_negative_mining: true
+hard_negative_strategy: adjacent_germline_stages
+target_tasks:
+  - germ_vs_somatic
+  - coarse_testis_annotation
+  - fine_spermatogenesis_annotation
+notes: "Specialized model for testis adaptation and stage discrimination."

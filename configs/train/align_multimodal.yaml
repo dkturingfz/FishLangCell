@@ -1,5 +1,13 @@
-stage: align_multimodal
-model_config: configs/model/fish_langcell_base.yaml
+run_name: align_multimodal_v0_1
 data_config: configs/data/foundation.yaml
-text_pair_source: data/text_corpus/fish_cell_text_pairs.parquet
-output_dir: outputs/checkpoints
+model_config: configs/model/fish_langcell_base.yaml
+training:
+  seed: 42
+  batch_size: 64
+  max_steps: 1000
+  learning_rate: 0.00005
+  temperature: 0.07
+outputs:
+  checkpoint_dir: outputs/checkpoints/align_multimodal_v0_1
+  log_dir: outputs/logs/align_multimodal_v0_1
+notes: "Placeholder objective weights and sampler strategy."

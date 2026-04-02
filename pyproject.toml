@@ -7,19 +7,18 @@ name = "fish-langcell"
 version = "0.1.0"
 description = "Fish-native LangCell scaffold for single-cell multimodal annotation"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "Fish-LangCell Team" }]
-dependencies = []
+dependencies = [
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+data = ["anndata>=0.10"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
 
 [project.scripts]
 fish-langcell = "fish_langcell.cli:main"
-ingest-dataset = "fish_langcell.cli:ingest_dataset"
-build-vocab = "fish_langcell.cli:build_vocab"
-build-sequences = "fish_langcell.cli:build_sequences"
-train-cell-encoder = "fish_langcell.cli:train_cell_encoder"
-train-multimodal = "fish_langcell.cli:train_multimodal"
-tune-testis = "fish_langcell.cli:tune_testis"
-run-benchmark = "fish_langcell.cli:run_benchmark"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

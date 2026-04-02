@@ -1,7 +1,14 @@
 model_name: fish-langcell-base
-cell_encoder_checkpoint: outputs/checkpoints/fish_geneformer_base.ckpt
-text_encoder_init: microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract-fulltext
+version: 0.1
+cell_encoder_init: configs/model/fish_geneformer_base.yaml
+text_encoder_backbone: microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext
 projection_dim: 256
-losses:
+alignment_objectives:
   - contrastive
   - matching
+text_prompt_types:
+  - short_label
+  - definition_sentence
+  - marker_sentence
+  - hierarchical_sentence
+notes: "Broad fish multimodal model before testis specialization."

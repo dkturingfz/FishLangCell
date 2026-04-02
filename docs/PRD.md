@@ -1,26 +1,36 @@
-# Fish-LangCell PRD (Draft)
+# Fish-LangCell Product Requirements (v0.1)
 
-## 1. Vision
-Build a fish-native LangCell system for fish single-cell transcriptomics annotation.
+## Purpose
+Fish-LangCell aims to deliver a **fish-native multimodal single-cell annotation system** inspired by LangCell. The core architectural change from prior work is replacing human-centered cell encoder initialization with a fish-native encoder and fish-native gene vocabulary.
 
-## 2. Product Goals
-- Broad fish cell-type representation.
-- Testis/spermatogenesis specialized annotation.
-- Text-cell joint embedding for zero-shot and few-shot usage.
+## v1 Scope
+- Zebrafish-first foundational training.
+- Fish testis and spermatogenesis specialization.
+- Zero-shot text-guided annotation, few-shot adaptation, and reference mapping.
 
-## 3. Non-Goals (Phase 1)
-- Spatial multi-omics joint training.
-- scATAC direct co-encoder.
-- Proteomics/CITE-seq joint training.
+## Primary Objectives
+1. Train fish-native cell encoder from fish scRNA-seq.
+2. Build fish ontology and fish cell-text corpus.
+3. Train multimodal fish LangCell base model.
+4. Fine-tune for testis domain and spermatogenesis stages.
+5. Release broad/testis benchmark suite.
 
-## 4. Deliverables
-- `fish-geneformer-small`
-- `fish-geneformer-base`
-- `fish-langcell-base`
-- `fish-langcell-testis`
+## Non-goals (v1)
+- Spatial transcriptomics training.
+- Direct multi-omic integration (ATAC/proteomics/imaging).
+- Full universal fish ontology.
+- Production GUI/web portal.
 
-## 5. Interfaces
-- zero-shot annotation
-- few-shot fine-tune
-- reference mapping
-- embedding export
+## Users
+- Computational fish scRNA-seq researchers.
+- Reproductive biology scientists studying spermatogenesis.
+- Method developers building multimodal foundation models.
+
+## Functional Requirements
+System must support ingestion, metadata harmonization, fish-native vocab construction, sequence tokenization, encoder pretraining, multimodal alignment, testis adaptation, and reproducible benchmark evaluation.
+
+## Non-functional Requirements
+- Modular, config-driven, versioned system.
+- Data and label provenance preservation.
+- Reproducible preprocessing/training/eval.
+- Expandable to additional teleost species.

@@ -1,7 +1,13 @@
-stage: eval
-benchmark_sets:
+run_name: eval_v0_1
+data_config: configs/data/eval.yaml
+checkpoint_candidates:
+  - outputs/checkpoints/align_multimodal_v0_1
+  - outputs/checkpoints/tune_testis_v0_1
+benchmarks:
   - broad_fish
   - testis_coarse
   - testis_fine
-data_config: configs/data/eval.yaml
-report_dir: outputs/reports
+report:
+  output_dir: outputs/reports/eval_v0_1
+  save_predictions: true
+notes: "Benchmark metrics to be finalized with frozen split spec."

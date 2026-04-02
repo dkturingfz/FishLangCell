@@ -1,18 +1,37 @@
-# Ontology Specification (v0.1 Draft)
+# Ontology Plan (v0.1)
 
-## Label policy
-Each cell keeps:
+## Broad Fish Ontology
+Initial top-level categories for foundation annotation:
+- germ cell
+- epithelial cell
+- stromal cell
+- endothelial cell
+- immune cell
+- neural cell
+- blood cell
+- muscle-like cell
+
+## Testis Ontology
+Hierarchy for testis specialization:
+- testis cell
+  - germ cell
+    - spermatogonia (undifferentiated, differentiating)
+    - spermatocyte (preleptotene, leptotene, zygotene, pachytene, diplotene, late meiotic)
+    - spermatid (early, intermediate, late)
+  - somatic cell
+    - Sertoli
+    - Leydig
+    - macrophage
+    - endothelial
+    - myoid / vascular smooth muscle-like
+    - stromal
+
+## Label Preservation Policy
+Every cell must preserve:
 - `label_original`
 - `label_harmonized`
 - `label_hierarchical`
 
-## Broad fish ontology
-See `data/ontology/broad_fish_ontology.yaml`.
-
-## Testis ontology
-See `data/ontology/testis_ontology.yaml`.
-
-## Governance
-- Freeze ontology versions per release.
-- Keep mapping tables from original labels to harmonized labels.
-- Allow conservative expansion in minor versions.
+## Versioning
+- Ontology resources are versioned artifacts.
+- Mapping changes should be tracked in change logs and benchmark freeze points.
