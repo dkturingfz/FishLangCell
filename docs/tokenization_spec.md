@@ -1,53 +1,58 @@
-# Tokenization and Sequence-Building Specification (Template v0.1)
+# Tokenization Dependency Specification (Frozen v0.1)
 
-This document defines non-compute requirements for future zebrafish sequence building.
+This document freezes dependencies and structural requirements for future sequence generation. No sequence generation is performed in this stage.
 
-## Expected input matrix format
+## Expected matrix orientation
 
-- Preferred format: AnnData `.h5ad` with raw counts available.
-- Alternative format (future): Matrix Market bundles.
-- Matrix requirements:
-  - cells on observation axis (`obs`)
-  - genes/features on variable axis (`var`)
-  - explicit `count_layer` for raw counts
+- Canonical orientation: cells as rows, genes as columns.
+- If an input uses a different orientation, it must declare and normalize orientation before sequence output.
 
-## Required metadata fields
+## Accepted input containers / file types
 
-Each cell record should provide at minimum:
+- AnnData: `.h5ad`
+- Matrix Market bundle: `.mtx` + barcode/cell metadata + gene/features metadata
+- Loom: `.loom` (accepted as optional legacy input)
+
+## Required cell metadata fields
+
 - `cell_id`
 - `dataset_id`
 - `species`
 - `tissue`
-- `developmental_stage`
-- `sex`
-- `split`
+- `label_original`
+- `label_harmonized`
+- `label_hierarchical`
+- `donor_id` (if available)
+- `batch_id` (if available)
 
-Missing required metadata should block sequence export for that dataset split.
+## Required gene metadata fields
 
-## Supported gene ID types
+- `gene_id`
+- `gene_symbol`
+- `gene_id_type`
 
-Sequence builders must accept these input ID types:
-- `Ensembl`
-- `Ensembl_or_symbol`
-- `SymbolOnly` (requires mapping via `gene_symbol_to_ensembl.tsv`)
+## Accepted gene ID types
 
-All IDs should be normalized to canonical gene IDs from `fish_gene_vocab_v0.1.tsv`.
+- `ensembl_gene_id`
+- `gene_symbol`
+- `ensembl_or_symbol_mixed`
 
-## Output naming conventions
+Canonicalization behavior must follow `configs/vocab/id_policy.yaml`.
 
-- Sequence file pattern: `{dataset_id}__{split}__rankseq_v{version}.parquet`
-- Metadata file pattern: `{dataset_id}__{split}__rankmeta_v{version}.json`
-- Output root: `data/sequences/zebrafish_v0_1/`
+## Dependency linkage
 
-Naming should preserve split boundaries and dataset provenance to reduce leakage risk.
+- `configs/vocab/id_policy.yaml`: canonical ID type, accepted input types, unresolved handling, and audit fields.
+- `data/vocab/fish_gene_vocab_v0.1.tsv`: primary token space and token IDs.
+- `data/vocab/gene_symbol_to_ensembl.tsv`: explicit symbol-to-gene_id mapping support.
 
-## Rank-based sequence parameters (placeholders)
+## Raw count policy
 
-The following fields are reserved and intentionally not executed in this round:
-- rank method
-- max genes per cell
-- count thresholds
-- tie-break strategy
-- special token policy
+Raw counts are preferred and treated as canonical future tokenization input. Normalized matrices are supplementary and cannot silently replace raw counts when raw counts exist.
 
-These placeholders are defined in `configs/tokenization/zebrafish_sequence_builder.yaml` for future implementation.
+## Future output naming conventions
+
+Future sequence outputs should use a stable pattern:
+- sequence: `{dataset_id}__{split}__rankseq_v{version}.parquet`
+- metadata: `{dataset_id}__{split}__rankmeta_v{version}.json`
+
+The split token in filenames is required to preserve evaluation boundary clarity.

@@ -34,3 +34,13 @@ System must support ingestion, metadata harmonization, fish-native vocab constru
 - Data and label provenance preservation.
 - Reproducible preprocessing/training/eval.
 - Expandable to additional teleost species.
+
+## Frozen schema prerequisites (v0.1 non-compute round)
+
+Before model training phases, these assets are required and versioned:
+- text corpus spec + starter JSONL files
+- cell corpus spec and manifest-aligned governance fields
+- gene vocabulary spec + starter TSV package + ID policy
+- tokenization dependency spec + sequence-builder template
+
+This round does not run training or sequence generation; it freezes schema and validation contracts only.

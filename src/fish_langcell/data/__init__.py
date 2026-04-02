@@ -6,7 +6,7 @@ from fish_langcell.data.governance import (
     validate_manifest_artifact,
     validate_ontology_artifact,
     validate_text_corpus_artifacts,
-    validate_tokenization_config,
+    validate_tokenization_spec,
     validate_vocab_artifacts,
 )
 from fish_langcell.data.inventory import validate_inventory
@@ -19,5 +19,5 @@ __all__ = [
     "validate_ontology_artifact",
     "validate_vocab_artifacts",
     "validate_text_corpus_artifacts",
-    "validate_tokenization_config",
+    "validate_tokenization_spec",
 ]

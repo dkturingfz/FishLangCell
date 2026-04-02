@@ -6,6 +6,8 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+import yaml
+
 from fish_langcell.utils.io import load_tsv_header, load_tsv_rows
 from fish_langcell.utils.validation import validate_required_columns
 
@@ -27,9 +29,7 @@ REQUIRED_INVENTORY_COLUMNS: tuple[str, ...] = (
 REQUIRED_MANIFEST_COLUMNS: tuple[str, ...] = REQUIRED_INVENTORY_COLUMNS
 
 INVENTORY_ALIASES: dict[str, tuple[str, ...]] = {
-    "stage": ("stage", "developmental_stage"),
     "source": ("source", "source_type"),
-    "donor_id": ("donor_id", "donor_id_available"),
     "label_original": ("label_original", "label_original_available"),
     "label_harmonized": ("label_harmonized", "label_harmonized_available"),
 }
@@ -47,33 +47,60 @@ REQUIRED_ONTOLOGY_COLUMNS: tuple[str, ...] = (
 
 REQUIRED_VOCAB_COLUMNS: dict[str, tuple[str, ...]] = {
     "data/vocab/fish_gene_vocab_v0.1.tsv": (
-        "gene_token",
-        "canonical_gene_id",
+        "token_id",
         "species",
+        "gene_id",
         "gene_symbol",
+        "gene_biotype",
+        "is_protein_coding",
+        "orthogroup_id",
+        "human_ortholog",
+        "is_testis_marker",
+        "is_germline_marker",
+        "is_somatic_marker",
         "status",
+        "source",
+        "notes",
     ),
     "data/vocab/zebrafish_gene_reference.tsv": (
-        "canonical_gene_id",
+        "gene_id",
         "gene_symbol",
-        "species",
-        "gene_id_type",
-        "status",
+        "gene_name",
+        "gene_biotype",
+        "chromosome",
+        "start",
+        "end",
+        "strand",
+        "genome_build",
+        "source",
+        "notes",
     ),
     "data/vocab/gene_symbol_to_ensembl.tsv": (
-        "species",
-        "input_symbol",
-        "canonical_gene_id",
+        "gene_symbol",
+        "gene_id",
         "mapping_status",
-        "review_required",
+        "mapping_source",
+        "ambiguity_flag",
+        "notes",
     ),
     "data/vocab/orthogroup_reference.tsv": (
         "orthogroup_id",
-        "reference_species",
-        "reference_gene_id",
-        "member_species",
-        "status",
+        "species",
+        "gene_id",
+        "gene_symbol",
+        "ortholog_group_label",
+        "human_ortholog",
+        "evidence_source",
+        "notes",
     ),
+}
+
+ALLOWED_VOCAB_STATUS: set[str] = {
+    "active",
+    "placeholder",
+    "pending_curation",
+    "deprecated",
+    "excluded",
 }
 
 REQUIRED_TEXT_CORPUS_FILES: tuple[str, ...] = (
@@ -84,10 +111,34 @@ REQUIRED_TEXT_CORPUS_FILES: tuple[str, ...] = (
 )
 
 REQUIRED_TEXT_CORPUS_FIELDS: tuple[str, ...] = (
-    "entry_id",
+    "id",
+    "species_scope",
+    "tissue_scope",
+    "ontology_namespace",
+    "label_original",
+    "label_harmonized",
+    "label_hierarchical",
+    "text_type",
+    "text",
+    "markers",
     "source",
     "status",
+    "notes",
 )
+
+ALLOWED_TEXT_TYPE: set[str] = {
+    "definition",
+    "marker_prompt",
+    "hierarchy_description",
+    "alias",
+}
+
+ALLOWED_TEXT_STATUS: set[str] = {
+    "draft",
+    "reviewed",
+    "frozen",
+    "deprecated",
+}
 
 ALLOWED_SPLITS: set[str] = {"foundation", "testis", "eval", "undecided"}
 ALLOWED_RECOMMENDED_USE: set[str] = {
@@ -213,7 +264,7 @@ def validate_manifest_artifact(path: str | Path) -> ValidationReport:
     errors: list[str] = []
     warnings: list[str] = []
 
-    missing_required = validate_required_columns(headers, REQUIRED_MANIFEST_COLUMNS)
+    missing_required = _resolve_alias_missing(column_set, REQUIRED_MANIFEST_COLUMNS)
     if missing_required:
         errors.append(f"Missing required columns: {', '.join(missing_required)}")
 
@@ -260,6 +311,15 @@ def validate_vocab_artifacts(base_dir: str | Path = ".") -> ValidationReport:
         if missing:
             errors.append(f"{rel_path} missing required columns: {', '.join(missing)}")
 
+        if rel_path.endswith("fish_gene_vocab_v0.1.tsv") and "status" in headers:
+            for idx, row in enumerate(rows, start=2):
+                status = row.get("status", "")
+                if status not in ALLOWED_VOCAB_STATUS:
+                    errors.append(
+                        f"{rel_path}:{idx} invalid status '{status}'. "
+                        f"Allowed: {', '.join(sorted(ALLOWED_VOCAB_STATUS))}"
+                    )
+
     return ValidationReport("vocab_artifacts", total_rows, errors, warnings)
 
 
@@ -286,33 +346,66 @@ def validate_text_corpus_artifacts(base_dir: str | Path = ".") -> ValidationRepo
                 except json.JSONDecodeError as exc:
                     errors.append(f"{rel_path}:{line_number} invalid JSON: {exc.msg}")
                     continue
-                for field in REQUIRED_TEXT_CORPUS_FIELDS:
-                    if field not in payload or payload.get(field) in (None, ""):
-                        errors.append(f"{rel_path}:{line_number} missing required field '{field}'")
+
+                missing = [f for f in REQUIRED_TEXT_CORPUS_FIELDS if f not in payload]
+                if missing:
+                    errors.append(f"{rel_path}:{line_number} missing required fields: {', '.join(missing)}")
+                    continue
+
+                if payload.get("text_type") not in ALLOWED_TEXT_TYPE:
+                    errors.append(
+                        f"{rel_path}:{line_number} invalid text_type '{payload.get('text_type')}'. "
+                        f"Allowed: {', '.join(sorted(ALLOWED_TEXT_TYPE))}"
+                    )
+
+                if payload.get("status") not in ALLOWED_TEXT_STATUS:
+                    errors.append(
+                        f"{rel_path}:{line_number} invalid status '{payload.get('status')}'. "
+                        f"Allowed: {', '.join(sorted(ALLOWED_TEXT_STATUS))}"
+                    )
+
+                if not isinstance(payload.get("markers"), list):
+                    errors.append(f"{rel_path}:{line_number} field 'markers' must be a JSON array")
 
     return ValidationReport("text_corpus_artifacts", total_rows, errors, warnings)
 
 
-def validate_tokenization_config(path: str | Path = "configs/tokenization/zebrafish_sequence_builder.yaml") -> ValidationReport:
+def validate_tokenization_spec(
+    path: str | Path = "configs/tokenization/zebrafish_sequence_builder.yaml",
+) -> ValidationReport:
     errors: list[str] = []
     warnings: list[str] = []
 
-    path_obj = Path(path)
-    if not path_obj.exists():
-        errors.append(f"Missing tokenization config: {path_obj}")
-        return ValidationReport(str(path_obj), 0, errors, warnings)
-
-    content = path_obj.read_text(encoding="utf-8")
-    required_top_level = (
-        "input:",
-        "required_metadata_fields:",
-        "supported_gene_id_types:",
-        "vocabulary:",
-        "output:",
-        "rank_sequence_parameters:",
+    required_files = (
+        "docs/tokenization_spec.md",
+        "configs/vocab/id_policy.yaml",
+        "data/vocab/fish_gene_vocab_v0.1.tsv",
+        str(path),
     )
-    for field in required_top_level:
-        if field not in content:
-            errors.append(f"Missing top-level tokenization field: {field.rstrip(':')}")
 
-    return ValidationReport(str(path_obj), 1, errors, warnings)
+    for req in required_files:
+        if not Path(req).exists():
+            errors.append(f"Missing required tokenization dependency file: {req}")
+
+    path_obj = Path(path)
+    if path_obj.exists():
+        content = path_obj.read_text(encoding="utf-8")
+        required_keys = (
+            "input_dataset_paths:",
+            "input_metadata_paths:",
+            "canonical_id_type:",
+            "matrix_orientation:",
+            "raw_count_preference_policy:",
+            "future_sequence_output_directory:",
+            "rank_tokenization_placeholders:",
+        )
+        for key in required_keys:
+            if key not in content:
+                errors.append(f"Missing tokenization config key: {key.rstrip(':')}")
+
+        try:
+            yaml.safe_load(content)
+        except yaml.YAMLError as exc:
+            errors.append(f"Invalid YAML in {path_obj}: {exc}")
+
+    return ValidationReport("tokenization_spec_dependencies", 1, errors, warnings)

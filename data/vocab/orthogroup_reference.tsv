@@ -1,3 +1,4 @@
-orthogroup_id	reference_species	reference_gene_id	reference_gene_symbol	member_species	member_gene_id	member_gene_symbol	confidence	source	status	notes
-OG0000001	Danio rerio	ENSDARG00000000001	demo_gene_a	Danio rerio	ENSDARG00000000001	demo_gene_a	high	placeholder	placeholder	Starter orthogroup record.
-OG0000999	Danio rerio	ENSDARG00000099999	demo_gene_b	Danio rerio			review_needed	manual	unresolved	Demonstrates unresolved orthogroup membership handling.
+orthogroup_id	species	gene_id	gene_symbol	ortholog_group_label	human_ortholog	evidence_source	notes
+OG0000001	Danio rerio	ENSDARG00000000001	demo_gene_a	placeholder_group_a	TBD	placeholder_inference	Starter orthogroup row.
+OG0000002	Danio rerio	ENSDARG00000000002	demo_gene_b	placeholder_group_b	TBD	manual_curated	Pending curation for ortholog assignment.
+OG_TBD	Danio rerio	TBD	unknown	unknown	TBD	manual_curated	Explicit unresolved orthogroup placeholder.
