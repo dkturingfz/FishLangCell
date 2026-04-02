@@ -1,6 +1,10 @@
-pool: eval
-splits:
+version: 0.1
+pool_name: eval
+eval_modes:
   - within_dataset_holdout
   - cross_paper_holdout
-  - cross_species_holdout_v2
-train_leakage_check: true
+  - donor_holdout
+inventory_path: data/data_inventory.tsv
+output_manifest: data/interim/eval_pool_manifest.tsv
+freeze_splits: true
+notes: "Freeze benchmark split definitions before v1 release."

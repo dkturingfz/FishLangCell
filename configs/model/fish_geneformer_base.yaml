@@ -1,9 +1,12 @@
 model_name: fish-geneformer-base
-architecture: transformer_encoder
+version: 0.1
+encoder_type: transformer_rank_gene
 hidden_size: 768
 num_layers: 12
 num_attention_heads: 12
-max_position_embeddings: 4096
-objective:
+max_sequence_length: 4096
+dropout: 0.1
+objectives:
   - masked_gene_modeling
   - optional_cell_contrastive
+notes: "Primary cell encoder target for v1 release."

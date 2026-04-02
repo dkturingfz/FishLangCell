@@ -1,16 +1,21 @@
-vocab_name: zebrafish_main
-species: danio_rerio
-gene_id_type: ensembl
-include_fields:
+version: 0.1
+species: Danio rerio
+canonical_gene_id_type: Ensembl
+include_gene_biotypes:
+  - protein_coding
+  - lincRNA
+retain_duplicated_paralogs: true
+fields:
   - token_id
   - species
   - gene_id
   - gene_symbol
   - gene_biotype
-  - is_protein_coding
   - orthogroup_id
   - human_ortholog
+  - is_protein_coding
   - is_testis_marker
   - is_germline_marker
   - is_somatic_marker
-paralog_policy: keep_separate_tokens
+output_vocab_tsv: data/interim/zebrafish_vocab_v0_1.tsv
+notes: "No silent collapse of teleost duplicated genes."

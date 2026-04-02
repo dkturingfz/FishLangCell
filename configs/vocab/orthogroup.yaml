@@ -1,8 +1,10 @@
-source: orthofinder_or_equivalent
-primary_key: orthogroup_id
+version: 0.1
+source: TODO_define_orthogroup_source
+species_anchor: Danio rerio
 fields:
   - orthogroup_id
   - species
   - gene_id
   - human_ortholog
-usage: auxiliary_only
+output_table: data/interim/orthogroup_mapping_v0_1.tsv
+usage: "Auxiliary metadata only; never replace primary token identity."

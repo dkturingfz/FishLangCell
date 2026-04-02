@@ -1,4 +1,14 @@
-stage: pretrain_cell
-model_config: configs/model/fish_geneformer_small.yaml
+run_name: pretrain_cell_v0_1
 data_config: configs/data/foundation.yaml
-output_dir: outputs/checkpoints
+vocab_config: configs/vocab/zebrafish_vocab.yaml
+model_config: configs/model/fish_geneformer_small.yaml
+training:
+  seed: 42
+  batch_size: 32
+  max_steps: 1000
+  learning_rate: 0.0001
+  precision: bf16
+outputs:
+  checkpoint_dir: outputs/checkpoints/pretrain_cell_v0_1
+  log_dir: outputs/logs/pretrain_cell_v0_1
+notes: "Scaffold defaults only; replace with scheduler and distributed settings later."

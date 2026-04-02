@@ -1,8 +1,11 @@
 model_name: fish-geneformer-small
-architecture: transformer_encoder
+version: 0.1
+encoder_type: transformer_rank_gene
 hidden_size: 384
-num_layers: 6
+num_layers: 8
 num_attention_heads: 6
-max_position_embeddings: 4096
-objective:
+max_sequence_length: 2048
+dropout: 0.1
+objectives:
   - masked_gene_modeling
+notes: "Initial small model for fast iteration and QC."

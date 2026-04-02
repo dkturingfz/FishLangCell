@@ -1,19 +1,16 @@
-pool: testis
-focus: spermatogenesis
+version: 0.1
+pool_name: testis
 species_priority:
-  - danio_rerio
-required_fields:
-  - dataset_id
-  - species
-  - tissue
-  - stage
-  - sex
-  - assay
-  - label_original
-  - label_harmonized
-hard_negative_pairs:
-  - [undifferentiated_spermatogonia, differentiating_spermatogonia]
-  - [preleptotene, leptotene]
-  - [leptotene, zygotene]
-  - [zygotene, pachytene]
-  - [early_spermatid, late_spermatid]
+  - Danio rerio
+include_tissues:
+  - testis
+focus_labels:
+  - germ_cell
+  - Sertoli_cell
+  - Leydig_cell
+  - macrophage
+  - endothelial_cell
+  - stromal_cell
+inventory_path: data/data_inventory.tsv
+output_manifest: data/interim/testis_pool_manifest.tsv
+notes: "Placeholder config for testis domain adaptation sampling."
