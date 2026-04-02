@@ -1,25 +1,25 @@
 # Ontology Mapping Guide (Scaffold v0.1)
 
 ## Purpose
-`data/ontology/ontology_mapping.tsv` is the editable mapping table used to normalize dataset labels into Fish-LangCell training/eval labels.
+Define how source labels map to harmonized and hierarchical labels in `data/ontology/ontology_mapping.tsv`.
 
-## Required columns
-The scaffold mapping table uses five required columns:
+## Required fields
 - `original_label`
 - `harmonized_label`
 - `hierarchical_label`
 - `ontology_namespace`
 - `notes`
 
-## How it is used later
-- **Manual curation now**: add and refine mappings row-by-row as datasets are reviewed.
-- **Compute work later**: preprocessing will apply these mappings to convert source annotations into harmonized labels.
+## How this will be used later
+- Normalize heterogeneous dataset labels into a shared project label space.
+- Keep text corpus labels and cell corpus labels aligned.
+- Provide a stable target for later preprocessing validation.
 
-## Curation rules for this stage
-- Keep labels conservative and broad where uncertain.
-- Use `notes` to mark uncertainty (for example: `pending_curation`).
-- Do not remove old source labels; add new rows for aliases/synonyms.
+## Manual curation now vs compute later
+- **Manual now**: add conservative mappings, preserve ambiguity in `notes`, avoid speculative granularity.
+- **Compute later**: apply mappings programmatically during metadata harmonization.
 
-## Linkage
-- Text corpus JSONL files should use `label_harmonized` and `label_hierarchical` values present in this mapping table.
-- Dataset manifests should keep `label_original`/`label_harmonized` compatible with this mapping table.
+## Curation guidance
+- Prefer broad, defensible labels when uncertain.
+- Add alias/source labels as new rows instead of replacing existing mappings.
+- Mark unresolved cases as `pending_curation`.

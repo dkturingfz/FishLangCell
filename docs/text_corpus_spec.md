@@ -1,7 +1,7 @@
 # Text Corpus Specification (Scaffold v0.1)
 
 ## Purpose
-Defines the lightweight JSONL schema for starter text artifacts used by Fish-LangCell.
+Define the editable JSONL schema for Fish-LangCell text corpus curation before any compute pipeline runs.
 
 ## Files in scope
 - `data/text_corpus/fish_celltype_definitions.jsonl`
@@ -9,8 +9,7 @@ Defines the lightweight JSONL schema for starter text artifacts used by Fish-Lan
 - `data/text_corpus/marker_sentences.jsonl`
 - `data/text_corpus/hierarchy_descriptions.jsonl`
 
-## Frozen common schema (all JSONL records)
-Required fields:
+## Required fields (all JSONL records)
 - `id`
 - `species_scope`
 - `tissue_scope`
@@ -25,23 +24,15 @@ Required fields:
 - `status`
 - `notes`
 
-## `text_type` values
-- `definition`
-- `marker_prompt`
-- `hierarchy_description`
-- `alias`
+## Allowed starter values
+- `text_type`: `definition`, `marker_prompt`, `hierarchy_description`, `alias`
+- `status`: `draft`, `reviewed`, `frozen`, `deprecated`
 
-## `status` values
-- `draft`
-- `reviewed`
-- `frozen`
-- `deprecated`
+## How this will be used later
+- Generate curation reports and review queues.
+- Provide aligned text artifacts for later prompt templates and weak supervision experiments.
+- Support traceable linkage from text entries to ontology mappings.
 
-## What is manual now vs compute later
-- **Manual now**: write short, conservative definitions/prompts and align labels to ontology mapping.
-- **Compute later**: use these records for prompt templates, weak supervision, and eval documentation generation.
-
-## Editing guidance
-- Keep entries short and curator-editable.
-- Prefer broad placeholders over speculative biological detail.
-- Keep harmonized/hierarchical labels synchronized with `data/ontology/ontology_mapping.tsv`.
+## Manual curation now vs compute later
+- **Manual now**: create conservative, human-editable records and keep label fields synchronized with ontology mapping.
+- **Compute later**: schema validation, dataset-linked text retrieval, and downstream text/cell alignment features.

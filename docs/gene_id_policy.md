@@ -1,23 +1,29 @@
 # Gene ID Policy (Scaffold v0.1)
 
 ## Purpose
-Set conservative rules for recording gene identifiers before compute pipelines are run.
+Define conservative rules for recording gene identifier types before any mapping or transformation work.
 
-## Current canonical policy
-- v0.1 is zebrafish-first.
-- Canonical target ID type for downstream processing is Ensembl gene ID.
-- Source ID type must always be recorded in manifest/inventory fields (`gene_id_type`).
+## Required fields to populate in inventory/manifests
+- `gene_id_type`
+- `species`
+- `dataset_id`
 
-## Allowed input states for scaffold curation
+## Current starter policy
+- Zebrafish-first scaffold.
+- Target canonical downstream ID family: Ensembl gene IDs.
+- Do not assume IDs are already canonical unless explicitly verified.
+
+## Allowed scaffold values for `gene_id_type`
 - `Ensembl`
 - `symbol`
 - `Ensembl_or_symbol`
 - `species_specific_or_mixed`
+- `unknown`
 
-## Manual now vs compute later
-- **Manual now**: accurately mark observed ID type and unresolved ambiguity.
-- **Compute later**: perform explicit ID mapping audits and produce mapped/unmapped reports.
+## How this will be used later
+- Drive ID harmonization checks and mapping reports.
+- Gate dataset readiness before preprocessing.
 
-## Guardrails
-- Never silently coerce unknown IDs.
-- Keep unresolved cases visible (`unknown`, `pending_curation`).
+## Manual curation now vs compute later
+- **Manual now**: capture observed ID type conservatively.
+- **Compute later**: perform actual mapping, conflict detection, and unmapped-ID reporting.

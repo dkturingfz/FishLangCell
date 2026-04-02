@@ -1,12 +1,10 @@
 # Data Inventory Guide (Scaffold v0.1)
 
 ## Purpose
-`data/data_inventory.tsv` is the source-of-truth registry for candidate datasets and governance status.
+`data/data_inventory.tsv` is the governance source of truth for candidate datasets considered by Fish-LangCell.
 
-## What each row represents
-One candidate dataset with enough metadata to track provenance, split assignment, and readiness.
-
-## Minimum required fields
+## Required fields
+At minimum, each row must include:
 - `dataset_id`
 - `species`
 - `tissue`
@@ -20,12 +18,11 @@ One candidate dataset with enough metadata to track provenance, split assignment
 - `license_or_usage`
 - `download_status`
 
-## Manual now vs compute later
-- **Manual now**: fill provenance fields, assign split/use, and document uncertainty as `TBD`/`pending_curation`.
-- **Compute later**: auto-generate inclusion lists and preprocessing plans from curated rows.
+## How this will be used later
+- Build inclusion/exclusion lists for pipeline runs.
+- Track provenance, policy compliance, and split governance.
+- Feed future automated checks for completeness and consistency.
 
-## Companion files
-- `docs/dataset_decisions.md`
-- `manifests/foundation_datasets.tsv`
-- `manifests/testis_datasets.tsv`
-- `manifests/eval_datasets.tsv`
+## Manual curation now vs compute later
+- **Manual now**: record candidate datasets and uncertainty with `TBD` / `pending_curation`.
+- **Compute later**: generate ingestion manifests and preprocess scheduling outputs.
