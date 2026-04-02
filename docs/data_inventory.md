@@ -1,34 +1,37 @@
 # Data Inventory Standard
 
-## Goal
-Track source provenance, biological metadata, technical metadata, annotation state, and project split assignment for all candidate datasets.
+## Purpose
+`data/data_inventory.tsv` is the single editable registry for candidate datasets and their governance status. It is used by curation, preprocessing, and training configuration generation.
 
-## Required Minimum Metadata
-- `dataset_id`
-- `species`
-- `tissue`
-- `stage`
-- `sex`
-- `assay`
-- `source`
-- `paper_id`
-- `donor_id`
-- `gene_id_type`
-- `label_original`
-- `label_harmonized`
-- `split`
+## Primary editors
+- Data curation owners
+- Benchmark/evaluation owners
+- Preprocessing maintainers (for QC and provenance completion)
 
-## Split Definitions
-- `foundation`: broad representation pretraining pool.
-- `testis`: testis domain tuning pool.
-- `eval`: strict holdout evaluation pool.
-- `undecided`: candidate pending audit.
+## Required governance behavior
+- One row per dataset candidate (`dataset_id` unique).
+- Preserve uncertainty explicitly (`TBD`, `unknown`, `pending_*`) rather than guessing.
+- Keep split and recommended use aligned with decision log in `docs/dataset_decisions.md`.
 
-## Provenance Policy
-Each dataset should preserve source URL/accession, citation metadata, assay/platform, ID system, preprocessing notes, and inclusion decision rationale.
+## Required/validated fields
+Validation enforces required columns and constrained value sets:
+- Required metadata columns (with alias support for `stage`, `source`, `donor_id`, `label_original`, `label_harmonized`).
+- `split` must be one of: `foundation`, `testis`, `eval`, `undecided`.
+- `recommended_use` must be one of: `foundation_pretrain`, `testis_tune`, `holdout_eval`, `defer_review`, `exclude_for_now`.
+- Critical provenance fields are checked for missing placeholders: `source_url`, `accession_or_link`, `paper_id`, `license_or_usage`, `download_status`.
 
-## Companion Artifacts
+## How this feeds preprocessing/training
+- Preprocessing should only promote rows that pass schema checks and required provenance thresholds.
+- Foundation/testis/eval data pools are generated from `split` + `recommended_use`.
+- Holdout evaluation datasets remain out of training by policy.
+
+## Companion artifacts
 - `data/data_inventory.tsv`
+- `docs/dataset_decisions.md`
 - `data/ontology/ontology_mapping.tsv`
 - `docs/gene_id_policy.md`
-- `docs/dataset_decisions.md`
+
+## Validation command
+```bash
+fish-langcell validate-inventory --inventory data/data_inventory.tsv
+```

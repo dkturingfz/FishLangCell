@@ -29,6 +29,12 @@ def _build_parser() -> argparse.ArgumentParser:
     harmonize.add_argument("--inventory", default="data/data_inventory.tsv", help="Data inventory TSV path")
     harmonize.add_argument("--mapping", default="data/ontology/ontology_mapping.tsv", help="Ontology mapping TSV path")
 
+    validate_inventory = subparsers.add_parser("validate-inventory", help="Validate dataset inventory governance artifact")
+    validate_inventory.add_argument("--inventory", default="data/data_inventory.tsv", help="Data inventory TSV path")
+
+    validate_ontology = subparsers.add_parser("validate-ontology", help="Validate ontology mapping governance artifact")
+    validate_ontology.add_argument("--mapping", default="data/ontology/ontology_mapping.tsv", help="Ontology mapping TSV path")
+
     vocab = subparsers.add_parser("build-vocab", help="Build fish-native vocabulary artifacts")
     vocab.add_argument("--config", default="configs/vocab/zebrafish_vocab.yaml", help="Vocabulary config path")
 
@@ -73,6 +79,30 @@ def _run_command(args: argparse.Namespace) -> int:
             return 2
         print("Inventory metadata columns validated. Harmonization scaffold ready.")
         _print_todo("harmonize-labels")
+
+    elif args.command == "validate-inventory":
+        _require_existing_path(args.inventory, "Inventory TSV")
+        from fish_langcell.data import validate_inventory_artifact
+
+        report = validate_inventory_artifact(args.inventory)
+        print(report.summary())
+        for warning in report.warnings:
+            print(f"WARNING: {warning}")
+        for error in report.errors:
+            print(f"ERROR: {error}")
+        return 0 if report.ok else 2
+
+    elif args.command == "validate-ontology":
+        _require_existing_path(args.mapping, "Ontology mapping TSV")
+        from fish_langcell.data import validate_ontology_artifact
+
+        report = validate_ontology_artifact(args.mapping)
+        print(report.summary())
+        for warning in report.warnings:
+            print(f"WARNING: {warning}")
+        for error in report.errors:
+            print(f"ERROR: {error}")
+        return 0 if report.ok else 2
 
     elif args.command in {"build-vocab", "build-sequences", "train-cell-encoder", "train-multimodal", "tune-testis", "run-benchmark"}:
         _require_existing_path(args.config, "Config file")
