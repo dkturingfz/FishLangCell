@@ -1,7 +1,8 @@
 original_label	harmonized_label	hierarchical_label	ontology_namespace	notes
-germ cell	germ cell	fish cell > germ cell	broad_fish	broad fish starter label
+fish cell	fish cell	fish cell	broad_fish	broad root starter label
 immune cell	immune cell	fish cell > immune cell	broad_fish	broad fish starter label
 epithelial cell	epithelial cell	fish cell > epithelial cell	broad_fish	broad fish starter label
+germ cell	germ cell	fish cell > germ cell	broad_fish	broad fish starter label
 spermatogonia	spermatogonia	testis cell > germ cell > spermatogonia	testis	testis starter label
 spermatocyte	spermatocyte	testis cell > germ cell > spermatocyte	testis	testis starter label
 spermatid	spermatid	testis cell > germ cell > spermatid	testis	testis starter label

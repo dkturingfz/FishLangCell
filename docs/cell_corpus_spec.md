@@ -1,10 +1,9 @@
 # Cell Corpus Specification (Scaffold v0.1)
 
 ## Purpose
-Defines non-compute schema expectations for dataset/cell/gene metadata before any heavy preprocessing.
+Define minimal metadata schemas for curating cell corpus sources before ingestion, normalization, or model training.
 
-## Manifest-level required fields
-Required for each row in manifest TSV files:
+## Required dataset-manifest fields (TSV rows)
 - `dataset_id`
 - `species`
 - `tissue`
@@ -18,7 +17,7 @@ Required for each row in manifest TSV files:
 - `license_or_usage`
 - `download_status`
 
-## Cell-level expected metadata (later standardization)
+## Expected cell-level fields (future standardized metadata)
 - `cell_id`
 - `dataset_id`
 - `species`
@@ -27,17 +26,22 @@ Required for each row in manifest TSV files:
 - `label_harmonized`
 - `label_hierarchical`
 
-## Gene-level expected metadata (later standardization)
+## Expected gene-level fields (future standardized metadata)
 - `gene_id`
 - `gene_symbol`
 - `gene_id_type`
 
-## What is manual now vs compute later
-- **Manual now**: curate dataset registry rows and governance decisions.
-- **Compute later**: ingestion, matrix normalization, ID harmonization, and sequence/token generation.
+## How this will be used later
+- Drive ingestion plans from curated manifests.
+- Enforce split boundaries for foundation/testis/eval stages.
+- Feed future validation scripts for ID policy and ontology consistency.
 
-## Out of scope in this scaffold round
-- No training
-- No heavy preprocessing
-- No sequence generation
-- No checkpoint downloads
+## Manual curation now vs compute later
+- **Manual now**: add conservative dataset metadata and split intent.
+- **Compute later**: data loading, normalization, harmonization, tokenization, and sequence construction.
+
+## Explicitly out of scope in scaffold round
+- Training
+- Heavy preprocessing
+- Sequence generation
+- Checkpoint download

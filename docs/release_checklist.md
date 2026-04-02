@@ -1,19 +1,21 @@
 # Release Checklist (Scaffold v0.1)
 
-Use this list before any public artifact release.
+## Purpose
+Define minimum governance and schema checks required before releasing scaffold or curated artifacts.
 
-## Governance
-- [ ] Inventory rows are curated with provenance fields completed.
-- [ ] Dataset decisions log is updated and consistent with manifests.
-- [ ] Ontology mappings reviewed for active labels.
-- [ ] Gene ID policy version is referenced in release notes.
+## Governance checks
+- [ ] `data/data_inventory.tsv` rows reviewed for provenance and policy fields.
+- [ ] `docs/dataset_decisions.md` consistent with split assignments in manifests.
+- [ ] `data/ontology/ontology_mapping.tsv` reviewed for active label coverage.
+- [ ] `docs/gene_id_policy.md` version and assumptions documented.
 
-## Corpus scaffolds
-- [ ] Text corpus JSONL files pass schema validation.
-- [ ] Manifest TSV files include required fields and split/use assignments.
-- [ ] Placeholder rows are clearly marked in notes/status fields.
+## Schema checks
+- [ ] Text corpus JSONL records include all required fields.
+- [ ] Manifest TSVs include required headers and conservative row values.
+- [ ] Placeholder values are clearly marked (`TBD`, `pending_curation`, or notes).
 
-## Compute boundary check
-- [ ] This scaffold phase did not include model training.
-- [ ] This scaffold phase did not include heavy preprocessing.
-- [ ] This scaffold phase did not include sequence generation.
+## Compute boundary checks
+- [ ] No training run in this phase.
+- [ ] No heavy preprocessing run in this phase.
+- [ ] No sequence generation run in this phase.
+- [ ] No checkpoint downloads performed in this phase.

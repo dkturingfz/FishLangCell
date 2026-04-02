@@ -1,30 +1,31 @@
 # Dataset Decisions Log (Scaffold v0.1)
 
-Tracks manual governance decisions for candidate datasets.
+## Purpose
+Track human governance decisions for dataset inclusion boundaries.
 
 ## Decision states
-- **included**: candidate can proceed to future preprocessing
-- **reserved**: intentionally held out (e.g., eval)
-- **deferred**: blocked on missing metadata/provenance
-- **excluded**: not used in current scope
+- `included`: allowed for later preprocessing pipeline consideration.
+- `reserved`: intentionally held out (typically eval).
+- `deferred`: pending metadata or policy clarification.
+- `excluded`: out of current scope.
 
 ## Starter decisions
 
-### zfish_foundation_broad_atlas_candidate_01
-- decision: included
-- split/use: foundation / foundation_pretrain
-- reason: broad zebrafish foundation starter candidate
+### zfish_foundation_candidate_01
+- decision: `included`
+- split/use: `foundation` / `foundation_pretrain`
+- rationale: broad fish starter candidate for foundation curation queue.
 
-### zfish_testis_atlas_candidate_01
-- decision: included
-- split/use: testis / testis_tune
-- reason: primary testis specialization starter candidate
+### zfish_testis_candidate_01
+- decision: `included`
+- split/use: `testis` / `testis_tune`
+- rationale: starter candidate for testis-focused curation queue.
 
-### zfish_eval_holdout_testis_candidate_01
-- decision: reserved
-- split/use: eval / holdout_eval
-- reason: holdout evaluation boundary
+### zfish_eval_holdout_candidate_01
+- decision: `reserved`
+- split/use: `eval` / `holdout_eval`
+- rationale: preserve independent holdout boundary.
 
-## Manual now vs compute later
-- **Manual now**: keep decision rationale aligned with inventory/manifests.
-- **Compute later**: enforce these decisions in dataset filtering and split construction.
+## Manual curation now vs compute later
+- **Manual now**: update decisions and rationale as provenance improves.
+- **Compute later**: enforce decision states in dataset filtering logic.
