@@ -4,23 +4,32 @@ Fish-LangCell is a **fish-native** multimodal single-cell annotation framework i
 
 ## Current status
 
-This repository is initialized as a **scaffold + planning implementation**:
-- modular package layout
-- versioned configs
-- data inventory and ontology templates
-- placeholder CLI commands for end-to-end workflow orchestration
+This repository now includes a first practical **data governance layer**:
+- curated dataset inventory scaffold with split/use decisions
+- ontology mapping table for harmonized and hierarchical labels
+- gene identifier policy focused on fish-native constraints
+- validation CLI commands for governance artifacts
 
-Model training logic remains intentionally minimal in this round.
+Model training remains intentionally minimal in this round.
 
 ## Repository layout
 
 - `configs/`: versioned configuration templates for data, vocab, models, and training/eval stages
 - `data/`: inventory and ontology mapping artifacts
-- `docs/`: PRD-derived project documentation
-- `src/fish_langcell/`: importable Python package modules
+- `docs/`: PRD-derived project documentation and governance policies
+- `src/fish_langcell/`: importable Python package modules and CLI
 - `scripts/`: helper scripts (future)
 - `benchmarks/`: benchmark assets and reports (future)
 - `outputs/`: generated outputs and exports
+
+## Governance artifacts
+
+- `data/data_inventory.tsv`: candidate datasets, provenance fields, split, and intended use
+- `data/ontology/ontology_mapping.tsv`: original-to-harmonized label mappings plus hierarchical paths
+- `docs/gene_id_policy.md`: canonical ID and teleost paralog handling policy
+- `docs/dataset_decisions.md`: include/defer/exclude decision log
+
+These artifacts are human-editable and machine-validated before preprocessing/training promotion.
 
 ## Quick start
 
@@ -31,8 +40,9 @@ pip install -e .
 fish-langcell --help
 ```
 
-## CLI commands (scaffold)
+## CLI commands
 
+Workflow scaffold commands:
 - `ingest-dataset`
 - `harmonize-labels`
 - `build-vocab`
@@ -43,4 +53,13 @@ fish-langcell --help
 - `run-benchmark`
 - `export-model`
 
-Each command validates key inputs, prints status, and leaves clear TODO markers for future implementation.
+Governance validation commands:
+- `validate-inventory`
+- `validate-ontology`
+
+### Typical governance checks
+
+```bash
+fish-langcell validate-inventory --inventory data/data_inventory.tsv
+fish-langcell validate-ontology --mapping data/ontology/ontology_mapping.tsv
+```

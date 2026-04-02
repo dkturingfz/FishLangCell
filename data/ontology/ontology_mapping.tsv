@@ -1,2 +1,33 @@
-original_label	harmonized_label	hierarchical_label	ontology_version	notes
-TBD_original_label	TBD_harmonized_label	testis cell > germ cell > spermatogonia	v0.1	Template row; replace with audited mapping entries.
+original_label	harmonized_label	hierarchical_label	ontology_namespace	ontology_version	mapping_confidence	source_dataset	notes
+germ cell	germ cell	testis cell > germ cell	fish_langcell	v0.1	curated	global_template	broad germline parent label
+spermatogonia	spermatogonia	testis cell > germ cell > spermatogonia	fish_langcell	v0.1	curated	global_template	parent spermatogonial state
+undifferentiated spermatogonia	undifferentiated spermatogonia	testis cell > germ cell > spermatogonia > undifferentiated spermatogonia	fish_langcell	v0.1	curated	global_template	stem/progenitor-like spermatogonial compartment
+differentiating spermatogonia	differentiating spermatogonia	testis cell > germ cell > spermatogonia > differentiating spermatogonia	fish_langcell	v0.1	curated	global_template	commitment toward meiosis
+spermatocyte	spermatocyte	testis cell > germ cell > spermatocyte	fish_langcell	v0.1	curated	global_template	parent meiotic label
+preleptotene	preleptotene spermatocyte	testis cell > germ cell > spermatocyte > preleptotene	fish_langcell	v0.1	curated	global_template	early meiotic entry stage
+leptotene	leptotene spermatocyte	testis cell > germ cell > spermatocyte > leptotene	fish_langcell	v0.1	curated	global_template	meiotic prophase I stage
+zygotene	zygotene spermatocyte	testis cell > germ cell > spermatocyte > zygotene	fish_langcell	v0.1	curated	global_template	meiotic prophase I stage
+pachytene	pachytene spermatocyte	testis cell > germ cell > spermatocyte > pachytene	fish_langcell	v0.1	curated	global_template	meiotic prophase I stage
+diplotene	diplotene spermatocyte	testis cell > germ cell > spermatocyte > diplotene	fish_langcell	v0.1	curated	global_template	late meiotic prophase I
+late meiotic cell	late meiotic cell	testis cell > germ cell > spermatocyte > late meiotic cell	fish_langcell	v0.1	provisional	global_template	catch-all for unresolved late meiotic states
+spermatid	spermatid	testis cell > germ cell > spermatid	fish_langcell	v0.1	curated	global_template	parent post-meiotic label
+early spermatid	early spermatid	testis cell > germ cell > spermatid > early spermatid	fish_langcell	v0.1	curated	global_template	post-meiotic early differentiation
+intermediate spermatid	intermediate spermatid	testis cell > germ cell > spermatid > intermediate spermatid	fish_langcell	v0.1	curated	global_template	mid spermiogenic stage
+late spermatid	late spermatid	testis cell > germ cell > spermatid > late spermatid	fish_langcell	v0.1	curated	global_template	late spermiogenic stage
+Sertoli cell	Sertoli cell	testis cell > somatic cell > Sertoli cell	fish_langcell	v0.1	curated	global_template	testis support cell
+Leydig cell	Leydig cell	testis cell > somatic cell > Leydig cell	fish_langcell	v0.1	curated	global_template	steroidogenic interstitial cell
+macrophage	macrophage	testis cell > somatic cell > immune cell > macrophage	fish_langcell	v0.1	curated	global_template	resident or infiltrating macrophage
+endothelial cell	endothelial cell	testis cell > somatic cell > endothelial cell	fish_langcell	v0.1	curated	global_template	vascular endothelium
+stromal cell	stromal cell	testis cell > somatic cell > stromal cell	fish_langcell	v0.1	curated	global_template	interstitial stromal compartment
+myoid	myoid / vascular smooth muscle-like cell	testis cell > somatic cell > myoid / vascular smooth muscle-like cell	fish_langcell	v0.1	provisional	global_template	maps abbreviated label 'myoid'
+vascular smooth muscle-like cell	myoid / vascular smooth muscle-like cell	testis cell > somatic cell > myoid / vascular smooth muscle-like cell	fish_langcell	v0.1	curated	global_template	canonical long-form label
+immune cell	immune cell	fish cell > immune cell	fish_langcell	v0.1	curated	global_template	broad fish category for foundation tasks
+epithelial cell	epithelial cell	fish cell > epithelial cell	fish_langcell	v0.1	curated	global_template	broad fish category for foundation tasks
+neural cell	neural cell	fish cell > neural cell	fish_langcell	v0.1	curated	global_template	broad fish category for foundation tasks
+blood cell	blood cell	fish cell > blood cell	fish_langcell	v0.1	curated	global_template	broad fish category for foundation tasks
+muscle-like cell	muscle-like cell	fish cell > muscle-like cell	fish_langcell	v0.1	curated	global_template	broad fish category for foundation tasks
+SPG_undiff	undifferentiated spermatogonia	testis cell > germ cell > spermatogonia > undifferentiated spermatogonia	fish_langcell	v0.1	provisional	zfish_testis_atlas_candidate_01	dataset-specific shorthand example
+Diff_SPG	differentiating spermatogonia	testis cell > germ cell > spermatogonia > differentiating spermatogonia	fish_langcell	v0.1	provisional	zfish_testis_atlas_candidate_01	dataset-specific shorthand example
+SPC_pachytene	pachytene spermatocyte	testis cell > germ cell > spermatocyte > pachytene	fish_langcell	v0.1	provisional	zfish_testis_aging_spermatogenesis_candidate_01	dataset-specific shorthand example
+Sertoli-like	Sertoli cell	testis cell > somatic cell > Sertoli cell	fish_langcell	v0.1	provisional	zfish_testis_qian2022	dataset-specific synonym example
+Endothelium	endothelial cell	testis cell > somatic cell > endothelial cell	fish_langcell	v0.1	provisional	zfish_foundation_broad_atlas_candidate_01	dataset label normalization example
